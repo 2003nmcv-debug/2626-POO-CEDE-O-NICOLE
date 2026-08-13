@@ -1,0 +1,38 @@
+[
+  {
+    "codigo": "P001",
+    "nombre": "Lomo Saltado",
+    "categoria": "Platillo",
+    "precio": 28.5
+  },
+  {
+    "codigo": "P002",
+    "nombre": "Arroz Chaufa",
+    "categoria": "Platillo",
+    "precio": 22.0
+  },
+  {
+    "codigo": "P003",
+    "nombre": "Ceviche Clasico",
+    "categoria": "Platillo",
+    "precio": 30.0
+  },
+  {
+    "codigo": "P004",
+    "nombre": "Inca Kola 500ml",
+    "categoria": "Bebida",
+    "precio": 6.5
+  },
+  {
+    "codigo": "P005",
+    "nombre": "Jugo Natural de Maracuya",
+    "categoria": "Bebida",
+    "precio": 7.0
+  },
+  {
+    "codigo": "P007",
+    "nombre": "Hot dog",
+    "categoria": "Comida rapida",
+    "precio": 1.0
+  }
+]
