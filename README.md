@@ -1,109 +1,44 @@
-# Sistema de Restaurante - Programación Orientada a Objetos
+# 2626-POO-CEDE-O-NICOLE
 
-## Información del estudiante
-- **Nombre:** Nicole Valentina Molina Corredor
-- **Proyecto:** `restaurante_app`
-- **Tema:** Aplicación de SRP, OCP y LSP en un restaurante
+Repositorio de practicas y parciales de Programacion Orientada a Objetos.
 
-## Descripción general
-Este proyecto implementa un sistema de consola para registrar y listar productos, bebidas y clientes de un restaurante. La solución está organizada en módulos para que cada clase cumpla una responsabilidad concreta y el servicio principal administre únicamente las colecciones y validaciones necesarias.
+## Actualizacion reciente
+Se incorporaron los archivos completos de `PARCIAL 2/SEMANA 9` al repositorio principal (ya visibles en GitHub), incluyendo codigo fuente, datos y documentacion.
 
-La clase `Bebida` amplía a `Producto` mediante herencia, lo que permite almacenar productos y bebidas en la misma lista sin modificar la lógica general del servicio. Durante el listado, el sistema usa polimorfismo: cada objeto responde con su propia implementación de `mostrar_informacion()`.
+## Semana 9 - funcionalidades implementadas
+- Registro, busqueda, actualizacion y eliminacion de productos.
+- Registro y listado de usuarios.
+- Validaciones de unicidad para codigo de producto e identificacion de usuario.
+- Obtencion de categorias unicas de productos.
+- Menu interactivo por consola.
 
-## Estructura del proyecto
+## Uso de estructuras de datos (Semana 9)
+- `list`: almacenamiento de productos y usuarios.
+- `tuple`: opciones fijas del menu.
+- `dict`: mapeo de opciones a acciones.
+- `set`: categorias unicas sin duplicados.
+
+## Estructura general del repositorio
 ```text
-restaurante_app/
-├── modelos/
-│   ├── __init__.py
-│   ├── producto.py
-│   ├── bebida.py
-│   └── cliente.py
-├── servicios/
-│   ├── __init__.py
-│   └── restaurante.py
-└── main.py
+PARCIAL 1/
+  SEMANA 3/
+  SEMANA 4/
+  SEMANA 5/
+  SEMANA 6/
+  SEMANA 7/
+  SEMANA 8/
+PARCIAL 2/
+  SEMANA 9/
+    README.md
+    restaurante_app/
 ```
 
-## Responsabilidad de cada clase
-
-### `Producto`
-Clase base que representa un producto general del restaurante.
-- Guarda `codigo`, `nombre`, `categoria` y `precio`.
-- Expone `mostrar_informacion()` para presentar los datos del producto.
-
-### `Bebida`
-Clase hija de `Producto`.
-- Reutiliza los datos comunes del producto.
-- Agrega información específica como `tamano` y `tipo_envase`.
-- Sobrescribe `mostrar_informacion()` para mostrar su propio detalle.
-
-### `Cliente`
-Clase independiente que representa a un cliente registrado.
-- Guarda `identificacion`, `nombre` y `correo`.
-- También implementa `mostrar_informacion()`.
-
-### `Restaurante`
-Servicio encargado de administrar las listas del sistema.
-- Registra productos y clientes.
-- Valida que no existan códigos repetidos en productos.
-- Valida que no existan identificaciones repetidas en clientes.
-- Lista productos y clientes sin mezclar la lógica de presentación con la lógica de negocio.
-
-### `main.py`
-Punto de entrada del programa.
-- Muestra el menú.
-- Solicita datos mediante `input()`.
-- Crea los objetos según la opción elegida.
-- Llama a los métodos del servicio.
-
-## Relación entre `Producto` y `Bebida`
-`Bebida` hereda de `Producto` porque una bebida sí es un tipo de producto. Esa relación permite:
-- Reutilizar atributos y validaciones comunes.
-- Almacenar ambos objetos en una sola colección.
-- Usar el mismo método de listado sin preguntar si el objeto es `Producto` o `Bebida`.
-
-Esto evidencia el principio de **sustitución de Liskov**: cualquier `Bebida` puede usarse donde se espere un `Producto`.
-
-## Principios SOLID aplicados
-
-### S — Responsabilidad única
-- `Producto` representa productos.
-- `Bebida` especializa productos.
-- `Cliente` representa clientes.
-- `Restaurante` administra colecciones y validaciones.
-- `main.py` coordina la interacción por consola.
-
-### O — Abierto / Cerrado
-El sistema está abierto para agregar nuevas clases de producto sin reescribir el servicio principal. `Bebida` se incorpora como una extensión de `Producto`.
-
-### L — Sustitución de Liskov
-Una bebida puede almacenarse y listarse como producto sin alterar el comportamiento esperado del sistema.
-
-## Instrucciones de ejecución
-1. Abrir una terminal en la raíz del repositorio.
-2. Ir a la carpeta del proyecto:
-   ```bash
-   cd restaurante_app
-   ```
-3. Ejecutar el programa:
-   ```bash
-   python main.py
-   ```
-
-## Ejemplo de menú
-```text
-========================================
-        SISTEMA DE RESTAURANTE
-========================================
-1. Registrar producto
-2. Registrar bebida
-3. Registrar cliente
-----------------------------------------
-4. Listar productos
-5. Listar clientes
-----------------------------------------
-6. Salir
+## Ejecucion de Semana 9
+```bash
+cd "PARCIAL 2/SEMANA 9"
+python -m restaurante_app.main
 ```
 
-## Reflexión breve
-Diseñar un proyecto con responsabilidades separadas hace que el código sea más fácil de entender, probar y mejorar. Cuando cada clase tiene un propósito claro, agregar nuevas funciones no obliga a reescribir todo el sistema. Esa organización es una base importante para construir programas mantenibles y escalables.
+## Documentacion relacionada
+- `PARCIAL 2/SEMANA 9/README.md`
+- `PARCIAL 2/SEMANA 9/restaurante_app/README.md`
