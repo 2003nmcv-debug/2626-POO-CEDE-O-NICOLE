@@ -1,0 +1,26 @@
+[
+  {
+    "codigo": "P001",
+    "nombre": "Arroz con pollo",
+    "categoria": "Platos fuertes",
+    "precio": 8.5
+  },
+  {
+    "codigo": "P002",
+    "nombre": "Jugo de naranja",
+    "categoria": "Bebidas",
+    "precio": 2.0
+  },
+  {
+    "codigo": "P003",
+    "nombre": "Ensalada mixta",
+    "categoria": "Entradas",
+    "precio": 4.25
+  },
+  {
+    "codigo": "P004",
+    "nombre": "Atún",
+    "categoria": "Enlatado",
+    "precio": 1.25
+  }
+]
