@@ -1,0 +1,24 @@
+[
+  {
+    "codigo": "P001",
+    "nombre": "Arroz con pollo",
+    "categoria": "Platos fuertes",
+    "precio": 12.5,
+    "stock": 8
+  },
+  {
+    "codigo": "P002",
+    "nombre": "Jugo de naranja",
+    "categoria": "Bebidas",
+    "precio": 4.0,
+    "stock": 12
+  },
+  {
+    "codigo": "P003",
+    "nombre": "Ensalada mixta",
+    "categoria": "Entradas",
+    "precio": 6.25,
+    "stock": 5
+  }
+]
+

@@ -1,0 +1,13 @@
+[
+  {
+    "usuario": "admin",
+    "contrasena": "admin123",
+    "nombre": "Administrador"
+  },
+  {
+    "usuario": "cajero",
+    "contrasena": "cajero123",
+    "nombre": "Cajero Principal"
+  }
+]
+
