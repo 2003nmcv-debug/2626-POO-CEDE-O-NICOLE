@@ -19,50 +19,55 @@ class Restaurante:
         self._productos: list[Producto] = []
         self._usuarios: list[Usuario] = []
         self._ventas: list[Venta] = []
+        self._productos_por_codigo: dict[str, Producto] = {}
+        self._usuarios_por_identificacion: dict[str, Usuario] = {}
+        self._ventas_por_usuario: dict[str, list[Venta]] = {}
 
     def cargar_productos_iniciales(self, productos: list[Producto]) -> None:
         """Reemplaza la coleccion interna por productos cargados desde JSON."""
         self._productos = []
-        codigos_registrados: set[str] = set()
+        self._productos_por_codigo = {}
 
         for producto in productos:
             codigo_normalizado = self._normalizar_clave(producto.codigo)
-            if codigo_normalizado in codigos_registrados:
+            if codigo_normalizado in self._productos_por_codigo:
                 continue
 
-            codigos_registrados.add(codigo_normalizado)
             self._productos.append(producto)
+            self._productos_por_codigo[codigo_normalizado] = producto
 
     def cargar_usuarios_iniciales(self, usuarios: list[Usuario]) -> None:
         """Reemplaza la coleccion interna por usuarios cargados desde JSON."""
         self._usuarios = []
-        identificaciones_registradas: set[str] = set()
+        self._usuarios_por_identificacion = {}
 
         for usuario in usuarios:
             identificacion_normalizada = self._normalizar_clave(usuario.identificacion)
-            if identificacion_normalizada in identificaciones_registradas:
+            if identificacion_normalizada in self._usuarios_por_identificacion:
                 continue
 
-            identificaciones_registradas.add(identificacion_normalizada)
             self._usuarios.append(usuario)
+            self._usuarios_por_identificacion[identificacion_normalizada] = usuario
 
     def cargar_ventas_iniciales(self, ventas: list[Venta]) -> None:
         """Carga las ventas recuperadas desde JSON."""
         self._ventas = list(ventas)
+        self._ventas_por_usuario = {}
+
+        for venta in self._ventas:
+            self._agregar_venta_a_indice(venta)
 
     def registrar_producto(self, producto: Producto) -> None:
         """Registra un producto verificando codigo unico."""
-        if self.buscar_producto(producto.codigo) is not None:
+        codigo_normalizado = self._normalizar_clave(producto.codigo)
+        if codigo_normalizado in self._productos_por_codigo:
             raise ValueError(f"Ya existe un producto con codigo {producto.codigo}")
 
         self._productos.append(producto)
+        self._productos_por_codigo[codigo_normalizado] = producto
 
     def buscar_producto(self, codigo: str) -> Producto | None:
-        codigo_normalizado = self._normalizar_clave(codigo)
-        for producto in self._productos:
-            if self._normalizar_clave(producto.codigo) == codigo_normalizado:
-                return producto
-        return None
+        return self._productos_por_codigo.get(self._normalizar_clave(codigo))
 
     def actualizar_producto(
         self, codigo: str, nombre: str, categoria: str, precio: float
@@ -80,6 +85,7 @@ class Restaurante:
             return False
 
         self._productos.remove(producto)
+        self._productos_por_codigo.pop(self._normalizar_clave(producto.codigo), None)
         return True
 
     def listar_productos(self) -> list[Producto]:
@@ -90,18 +96,18 @@ class Restaurante:
         return {producto.categoria for producto in self._productos}
 
     def registrar_usuario(self, usuario: Usuario) -> None:
-        if self.buscar_usuario(usuario.identificacion) is not None:
+        identificacion_normalizada = self._normalizar_clave(usuario.identificacion)
+        if identificacion_normalizada in self._usuarios_por_identificacion:
             raise ValueError(
                 f"Ya existe un usuario con identificacion {usuario.identificacion}"
             )
         self._usuarios.append(usuario)
+        self._usuarios_por_identificacion[identificacion_normalizada] = usuario
 
     def buscar_usuario(self, identificacion: str) -> Usuario | None:
-        clave = self._normalizar_clave(identificacion)
-        for usuario in self._usuarios:
-            if self._normalizar_clave(usuario.identificacion) == clave:
-                return usuario
-        return None
+        return self._usuarios_por_identificacion.get(
+            self._normalizar_clave(identificacion)
+        )
 
     def listar_usuarios(self) -> list[Usuario]:
         return list(self._usuarios)
@@ -125,19 +131,13 @@ class Restaurante:
 
         venta = Venta(usuario.identificacion, producto.codigo, cantidad_solicitada)
         self._ventas.append(venta)
+        self._agregar_venta_a_indice(venta)
         producto.vender(cantidad_solicitada)
         return True
 
     def buscar_ventas_por_usuario(self, identificacion_usuario: str) -> list[Venta]:
-        ventas_usuario: list[Venta] = []
-
-        for venta in self._ventas:
-            if self._normalizar_clave(venta.usuario_id) == self._normalizar_clave(
-                identificacion_usuario
-            ):
-                ventas_usuario.append(venta)
-
-        return ventas_usuario
+        clave_usuario = self._normalizar_clave(identificacion_usuario)
+        return list(self._ventas_por_usuario.get(clave_usuario, []))
 
     def listar_ventas(self) -> list[Venta]:
         return list(self._ventas)
@@ -145,3 +145,9 @@ class Restaurante:
     @staticmethod
     def _normalizar_clave(valor: str) -> str:
         return str(valor).strip().upper()
+
+    def _agregar_venta_a_indice(self, venta: Venta) -> None:
+        clave_usuario = self._normalizar_clave(venta.usuario_id)
+        if clave_usuario not in self._ventas_por_usuario:
+            self._ventas_por_usuario[clave_usuario] = []
+        self._ventas_por_usuario[clave_usuario].append(venta)

@@ -1,10 +1,10 @@
-# Semana 11 - restaurante_app
+# Semana 12 - restaurante_app
 
 ## Estudiante
 - Nombre completo: **Nicole Micaela Cedeño Vizhñay**
 
 ## Descripcion breve
-Aplicacion de consola para administrar productos, usuarios y ventas de un restaurante usando colecciones de objetos y persistencia JSON.
+Aplicacion de consola para administrar productos, usuarios y ventas de un restaurante usando colecciones de objetos, persistencia JSON y optimizacion de busquedas con estructuras auxiliares en memoria.
 
 ## Estructura del proyecto
 
@@ -46,6 +46,22 @@ Cada producto conserva un atributo `stock`. Al vender:
 7. Se descuenta el stock del producto.
 8. Se guardan `ventas.json` y `productos.json`.
 
+## Mejoras de rendimiento con colecciones (Semana 12)
+Se conservaron las listas principales para almacenar, listar y persistir:
+- `self._productos`
+- `self._usuarios`
+- `self._ventas`
+
+Se agregaron indices auxiliares con `dict` para busquedas frecuentes por clave unica:
+- `self._productos_por_codigo`: permite buscar productos por codigo sin recorrer toda la lista.
+- `self._usuarios_por_identificacion`: permite buscar usuarios por identificacion en acceso directo.
+- `self._ventas_por_usuario`: agrupa ventas por usuario para consultar historial sin recorrer todas las ventas cada vez.
+
+Ademas:
+- Se reconstruyen los indices al cargar datos desde JSON.
+- Los indices se mantienen sincronizados al registrar, eliminar y vender.
+- Se mantiene uso de `set` en `obtener_categorias_unicas()` para categorias sin repetidos.
+
 ## Persistencia JSON
 - `productos.json`: conserva los productos y su stock.
 - `usuarios.json`: conserva los usuarios registrados.
@@ -68,9 +84,10 @@ python -m restaurante_app.main
 ```
 
 ## Pruebas realizadas
-- Registro de productos con stock.
-- Registro de usuarios.
-- Venta valida con descuento de stock.
+- Registro y carga de productos, usuarios y ventas desde JSON.
+- Busqueda de producto por codigo.
+- Busqueda de usuario por identificacion.
 - Consulta de ventas por usuario.
-- Reinicio del programa para verificar recuperacion desde JSON.
-- Intento de venta con stock insuficiente para confirmar rechazo.
+- Venta valida con descuento de stock.
+- Verificacion de coherencia entre listas e indices tras cambios de datos.
+- Reinicio del programa para comprobar reconstruccion de indices en memoria.
