@@ -35,6 +35,12 @@ class ArchivoServicio:
     def cargar_usuarios(self) -> list[Usuario]:
         return self._cargar_entidades(self._ruta_usuarios, Usuario.from_dict, "usuario")
 
+    def guardar_productos(self, productos: list[Producto]) -> None:
+        self._guardar_entidades(self._ruta_productos, productos)
+
+    def guardar_usuarios(self, usuarios: list[Usuario]) -> None:
+        self._guardar_entidades(self._ruta_usuarios, usuarios)
+
     def _cargar_entidades(
         self,
         ruta: Path,
@@ -82,3 +88,13 @@ class ArchivoServicio:
 
         return entidades
 
+    @staticmethod
+    def _guardar_entidades(ruta: Path, entidades: list[object]) -> None:
+        registros = []
+        for entidad in entidades:
+            if not hasattr(entidad, "to_dict"):
+                raise ValueError("La entidad no puede convertirse a diccionario.")
+            registros.append(entidad.to_dict())  # type: ignore[union-attr]
+
+        with ruta.open("w", encoding="utf-8") as archivo:
+            json.dump(registros, archivo, ensure_ascii=False, indent=2)

@@ -7,18 +7,17 @@
     "stock": 8
   },
   {
-    "codigo": "P002",
-    "nombre": "Jugo de naranja",
-    "categoria": "Bebidas",
-    "precio": 4.0,
-    "stock": 12
-  },
-  {
     "codigo": "P003",
     "nombre": "Ensalada mixta",
     "categoria": "Entradas",
-    "precio": 6.25,
+    "precio": 6.55,
     "stock": 5
+  },
+  {
+    "codigo": "P004",
+    "nombre": "Atún con Chochos",
+    "categoria": "Entrada",
+    "precio": 5.0,
+    "stock": 20
   }
 ]
-
